@@ -70,26 +70,48 @@ find_library(ZLIB_LIBRARY NAMES zlib zlib_d PATH_SUFFIXES lib)
 find_library(FREETYPE_LIBRARY NAMES freetype freetype_d PATH_SUFFIXES lib) ''')
 
     def build(self):
+        ogre_cmake_args = {
+            'OGRE_BUILD_DEPENDENCIES':                  'OFF',
+            'OGRE_USE_BOOST':                           '0',
+            'OGRE_BUILD_COMPONENT_HLMS_PBS':            'ON',
+            'OGRE_BUILD_COMPONENT_HLMS_UNLI':           'ON',
+            'OGRE_BUILD_COMPONENT_HLMS_UNLIT':          'ON',
+            'OGRE_BUILD_COMPONENT_MESHLODGENERATOR':    'ON',
+            'OGRE_BUILD_COMPONENT_OVERLAY':             'ON',
+            'OGRE_BUILD_COMPONENT_PAGING':              'ON',
+            'OGRE_BUILD_COMPONENT_PLANAR_REFLECTIONS':  'ON',
+            'OGRE_BUILD_COMPONENT_PROPERTY':            'ON',
+            'OGRE_BUILD_COMPONENT_RTSHADERSYSTEM':      'ON',
+            'OGRE_BUILD_COMPONENT_SCENE_FORMAT':        'ON',
+            'OGRE_BUILD_COMPONENT_TERRAIN':             'ON',
+            'OGRE_BUILD_COMPONENT_VOLUME':              'ON',
+            'OGRE_BUILD_PLUGIN_PFX':                    'ON',
+            'OGRE_BUILD_RENDERSYSTEM_GL3PLUS':          'ON',
+            'OGRE_BUILD_RENDERSYSTEM_VULKAN':           'ON',
+            'OGRE_BUILD_SAMPLES2':                      'OFF',
+            'OGRE_BUILD_TESTS':                         'OFF',
+            'OGRE_BUILD_TOOLS':                         'ON',
+            'OGRE_CONFIG_ENABLE_JSON':                  'ON',
+            'OGRE_CONFIG_ENABLE_QUAD_BUFFER':           'OFF',
+            'OGRE_CONFIG_THREADS':                      '2',
+            'OGRE_CONFIG_THREAD_PROVIDER':              'std',
+            'OGRE_INSTALL_DOCS':                        'OFF',
+            'OGRE_INSTALL_SAMPLES':                     'OFF',
+            'OGRE_INSTALL_TOOLS':                       'ON',
+            'OGRE_INSTALL_PDB':                         'OFF',  
+            'OGRE_RESOURCEMANAGER_STRICT':              '0',
+            'OGRE_BUILD_COMPONENT_OVERLAY_IMGUI':       'ON',   
+            'OGRE_BUILD_COMPONENT_CSHARP':              'OFF',  
+            'OGRE_BUILD_COMPONENT_JAVA':                'OFF',  
+            'OGRE_BUILD_COMPONENT_PYTHON':              'OFF',  
+            'OGRE_BUILD_PLUGIN_STBI':                   'OFF',  
+            'OGRE_BUILD_COMPONENT_BITES':               'ON',   
+        }  
+
         cmake = CMake(self)
-        cmake.definitions['OGRE_BUILD_DEPENDENCIES'] = 'OFF'
-        cmake.definitions['OGRE_USE_BOOST'] = '0'
-        cmake.definitions['OGRE_CONFIG_THREAD_PROVIDER'] = '0'
-        cmake.definitions['OGRE_CONFIG_THREADS'] = '0'
-        cmake.definitions['OGRE_BUILD_DEPENDENCIES'] = 'OFF'
-        cmake.definitions['OGRE_BUILD_COMPONENT_OVERLAY_IMGUI'] = 'ON'
-        cmake.definitions['OGRE_BUILD_COMPONENT_CSHARP'] = 'OFF'
-        cmake.definitions['OGRE_BUILD_COMPONENT_JAVA'] = 'OFF'
-        cmake.definitions['OGRE_BUILD_COMPONENT_PYTHON'] = 'OFF'
-        cmake.definitions['OGRE_BUILD_PLUGIN_STBI'] = 'OFF'
-        cmake.definitions['OGRE_BUILD_COMPONENT_BITES'] = 'ON'
-        cmake.definitions['OGRE_BUILD_SAMPLES'] = 'OFF'
-        cmake.definitions['OGRE_BUILD_RENDERSYSTEM_D3D11'] = 'ON'
-        cmake.definitions['OGRE_BUILD_RENDERSYSTEM_GL3PLUS'] = 'OFF'
-        cmake.definitions['OGRE_RESOURCEMANAGER_STRICT'] = 0 
-        cmake.definitions['OGRE_INSTALL_SAMPLES'] = 'OFF'   
-        cmake.definitions['OGRE_INSTALL_PDB'] = 'OFF'
-        cmake.definitions['OGRE_INSTALL_DOCS'] = 'OFF'
-        cmake.definitions['OGRE_BUILD_SAMPLES2'] = 'OFF'
+        for k,v in ogre_cmake_args:
+            cmake.definitions[k] = v
+
         if os_info.is_windows:
             cmake.definitions['CMAKE_CXX_FLAGS'] = '-D_OGRE_FILESYSTEM_ARCHIVE_UNICODE'
         cmake.configure()
