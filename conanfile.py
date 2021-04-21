@@ -15,17 +15,17 @@ class OGREConan(ConanFile):
         if os_info.is_linux:
             if os_info.with_apt:
                 installer = SystemPackageTool()
-                installer.install("xorg-dev")
-                installer.install("libfreeimage-dev")
-                installer.install("libgl1-mesa-dev")
-                installer.install("libglu1-mesa-dev")
+                installer.install(["xorg-dev", "xorg-server-common"])
+                installer.install(["libfreeimage-dev", "freeimage"])
+                installer.install(["libgl1-mesa-dev", "mesa"])
+                installer.install(["libglu1-mesa-dev", "glu"])
                 installer.install("nvidia-cg-toolkit")
-                installer.install("libopenal-dev")
-                installer.install("libx11-dev")
-                installer.install("libxt-dev")
-                installer.install("libxaw7-dev")
-                installer.install("libpugixml-dev")
-                installer.install("libzzip-dev")
+                installer.install(["libopenal-dev", "openal"])
+                installer.install(["libx11-dev", "libx11"])
+                installer.install(["libxt-dev", "libxt"])
+                installer.install(["libxaw7-dev", "libxaw"])
+                installer.install(["libpugixml-dev", "pugixml"])
+                installer.install(["libzzip-dev", "zziplib"])
 
     def requirements(self):
         if os_info.is_windows:
